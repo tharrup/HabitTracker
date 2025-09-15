@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.build/
+dist/
+build/
+
+# Environments
+.env
+.venv
+venv/
+env/
+*.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kivy/KivyMD
+*.log
+*.kv~
+*.atlas
+*.spec
+
+# Data/Cache
+*.sqlite3
+*.db
+.cache/
+logs/
+tmp/

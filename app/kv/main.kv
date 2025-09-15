@@ -1,0 +1,80 @@
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDFloatLayout kivymd.uix.floatlayout.MDFloatLayout
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDCard kivymd.uix.card.MDCard
+#:import MDIconButton kivymd.uix.button.MDIconButton
+#:import MDList kivymd.uix.list.MDList
+#:import RecycleView kivy.uix.recycleview.RecycleView
+#:import RecycleViewBehavior kivy.uix.recycleview.behaviors.RecycleViewBehavior
+
+MDFloatLayout:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "16dp"
+        spacing: "12dp"
+
+        MDLabel:
+            text: "Habit Tracker"
+            halign: "left"
+            font_style: "HeadlineSmall"
+
+        MDBoxLayout:
+            spacing: "8dp"
+            MDTextField:
+                id: input
+                hint_text: "Add a new habit"
+                on_text_validate: app.add_habit(self.text)
+            MDIconButton:
+                icon: "plus"
+                on_release: app.add_habit(input.text)
+
+        RecycleView:
+            id: rv
+            viewclass: "HabitRow"
+            bar_width: "8dp"
+            scroll_type: ["bars", "content"]
+            MDBoxLayout:
+                id: box
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                adaptive_height: True
+
+        MDLabel:
+            text: app.status_msg
+            halign: "left"
+            theme_text_color: "Secondary"
+
+<HabitRow@MDCard>:
+    index: 0
+    name: ""
+    streak: 0
+    xp: 0
+    last_completed: ""
+    complete_cb: lambda: None
+    delete_cb: lambda: None
+    padding: "12dp"
+    radius: [16,16,16,16]
+    ripple_behavior: True
+    size_hint_y: None
+    height: "72dp"
+
+    MDBoxLayout:
+        spacing: "12dp"
+        MDBoxLayout:
+            orientation: "vertical"
+            MDLabel:
+                text: root.name
+                font_style: "TitleSmall"
+                halign: "left"
+            MDLabel:
+                text: f"Streak: {root.streak}  •  XP: {root.xp}  •  Last: {root.last_completed}"
+                theme_text_color: "Secondary"
+                halign: "left"
+        MDIconButton:
+            icon: "check"
+            on_release: root.complete_cb()
+        MDIconButton:
+            icon: "delete"
+            on_release: root.delete_cb()
